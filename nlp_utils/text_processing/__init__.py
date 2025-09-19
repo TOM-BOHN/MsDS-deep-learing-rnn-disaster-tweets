@@ -1,16 +1,59 @@
 """
 Text Processing Module
 
-This module will contain functions for text preprocessing, normalization,
+This module contains functions for text preprocessing, normalization,
 and cleaning operations used in NLP projects.
 
-Future functions will include:
+Functions include:
 - Text normalization and cleaning
 - Tokenization utilities
 - Stopword removal
 - Stemming and lemmatization
 - Text vectorization helpers
+
+Source: Recycled from previous Natural Language Processing (NLP) analysis projects.
+The general pattern of completing text processing for NLP typically includes
+a comprehensive set of cleaning and normalization functions.
+
+Original Source: auto_classifying_salesforce_cloud_documentation.ipynb
 """
 
-# Placeholder for future text processing functions
-__all__ = []
+from .functions import (
+    convert_to_lowercase,
+    remove_whitespace,
+    remove_punctuation,
+    remove_html,
+    remove_emoji,
+    remove_http,
+    convert_acronyms,
+    convert_contractions,
+    remove_stopwords,
+    pyspellchecker,
+    text_stemmer,
+    text_lemmatizer,
+    discard_non_alpha,
+    keep_pos,
+    remove_additional_stopwords,
+    text_normalizer,
+    apply_text_normalizer
+)
+
+__all__ = [
+    'convert_to_lowercase',
+    'remove_whitespace',
+    'remove_punctuation',
+    'remove_html',
+    'remove_emoji',
+    'remove_http',
+    'convert_acronyms',
+    'convert_contractions',
+    'remove_stopwords',
+    'pyspellchecker',
+    'text_stemmer',
+    'text_lemmatizer',
+    'discard_non_alpha',
+    'keep_pos',
+    'remove_additional_stopwords',
+    'text_normalizer',
+    'apply_text_normalizer'
+]

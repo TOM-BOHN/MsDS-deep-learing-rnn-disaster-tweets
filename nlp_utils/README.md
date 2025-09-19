@@ -29,7 +29,7 @@ from nlp_utils import quick_table_details, viz_class_frequency
 ### Import from specific subpackages
 ```python
 from nlp_utils.eda import quick_table_details, count_field
-from nlp_utils.text_processing import text_normalizer  # Future
+from nlp_utils.text_processing import text_normalizer, apply_text_normalizer
 from nlp_utils.model_utils import learning_curve      # Future
 ```
 
@@ -48,15 +48,27 @@ from nlp_utils.model_utils import learning_curve      # Future
 - `viz_word_frequency()` - Visualize word count distributions
 - `viz_word_length_frequency()` - Visualize average word length distributions
 
-## Future Modules
+### Text Processing Module (`nlp_utils.text_processing`)
 
-### Text Processing Module
-Will contain functions for:
-- Text normalization and cleaning
-- Tokenization utilities
-- Stopword removal
-- Stemming and lemmatization
-- Text vectorization helpers
+- `convert_to_lowercase()` - Convert text to lowercase
+- `remove_whitespace()` - Remove leading and trailing whitespaces
+- `remove_punctuation()` - Remove punctuation while preserving apostrophes
+- `remove_html()` - Remove HTML tags from text
+- `remove_emoji()` - Remove emojis from text
+- `remove_http()` - Remove HTTP/HTTPS URLs from text
+- `convert_acronyms()` - Convert acronyms to their full forms
+- `convert_contractions()` - Convert contractions to their full forms
+- `remove_stopwords()` - Remove stopwords from text
+- `pyspellchecker()` - Fix spelling errors using pyspellchecker
+- `text_stemmer()` - Apply stemming using Porter Stemmer
+- `text_lemmatizer()` - Apply lemmatization using spaCy
+- `discard_non_alpha()` - Remove non-alphabetic words
+- `keep_pos()` - Keep only specific parts of speech
+- `remove_additional_stopwords()` - Remove custom stopwords
+- `text_normalizer()` - Apply comprehensive text normalization pipeline
+- `apply_text_normalizer()` - Apply normalization to training and test datasets
+
+## Future Modules
 
 ### Model Utils Module
 Will contain functions for:

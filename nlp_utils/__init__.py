@@ -33,6 +33,26 @@ from .eda import (
     viz_word_length_frequency
 )
 
+from .text_processing import (
+    convert_to_lowercase,
+    remove_whitespace,
+    remove_punctuation,
+    remove_html,
+    remove_emoji,
+    remove_http,
+    convert_acronyms,
+    convert_contractions,
+    remove_stopwords,
+    pyspellchecker,
+    text_stemmer,
+    text_lemmatizer,
+    discard_non_alpha,
+    keep_pos,
+    remove_additional_stopwords,
+    text_normalizer,
+    apply_text_normalizer
+)
+
 __all__ = [
     # EDA functions
     'replace_labels',
@@ -45,4 +65,22 @@ __all__ = [
     'viz_char_frequency',
     'viz_word_frequency',
     'viz_word_length_frequency',
+    # Text processing functions
+    'convert_to_lowercase',
+    'remove_whitespace',
+    'remove_punctuation',
+    'remove_html',
+    'remove_emoji',
+    'remove_http',
+    'convert_acronyms',
+    'convert_contractions',
+    'remove_stopwords',
+    'pyspellchecker',
+    'text_stemmer',
+    'text_lemmatizer',
+    'discard_non_alpha',
+    'keep_pos',
+    'remove_additional_stopwords',
+    'text_normalizer',
+    'apply_text_normalizer',
 ]
