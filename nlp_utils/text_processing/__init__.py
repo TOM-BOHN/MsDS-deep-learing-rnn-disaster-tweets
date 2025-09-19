@@ -19,6 +19,7 @@ Original Source: auto_classifying_salesforce_cloud_documentation.ipynb
 """
 
 from .functions import (
+    advanced_text_preprocessing,
     convert_to_lowercase,
     remove_whitespace,
     remove_punctuation,
@@ -39,6 +40,7 @@ from .functions import (
 )
 
 __all__ = [
+    'advanced_text_preprocessing',
     'convert_to_lowercase',
     'remove_whitespace',
     'remove_punctuation',

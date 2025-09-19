@@ -67,6 +67,41 @@ others = ["ã", "å", "ì", "û", "ûªm", "ûó", "ûò", "ìñ", "ûªre", "û
 additional_stops = alphabets + prepositions + prepositions_less_common + coordinating_conjunctions + correlative_conjunctions + subordinating_conjunctions + others
 
 
+def advanced_text_preprocessing(text):
+    """
+    Advanced text preprocessing with additional cleaning steps.
+    
+    This function performs additional preprocessing steps beyond basic normalization:
+    - Normalize user mentions to USER_MENTION token
+    - Normalize hashtags to HASHTAG token
+    - Reduce repeated characters (e.g., "sooo" -> "so")
+    - Replace numbers with NUM token
+    - Clean up whitespace
+    
+    Args:
+        text (str): Input text
+        
+    Returns:
+        str: Preprocessed text with normalized tokens
+    """
+    # Remove user mentions but keep the fact that there was a mention
+    text = re.sub(r'@\w+', 'USER_MENTION', text)
+    
+    # Remove hashtags but keep the fact that there was a hashtag
+    text = re.sub(r'#\w+', 'HASHTAG', text)
+    
+    # Normalize repeated characters (e.g., "sooo" -> "so")
+    text = re.sub(r'(.)\1{2,}', r'\1', text)
+    
+    # Handle numbers (replace with NUM token)
+    text = re.sub(r'\d+', 'NUM', text)
+    
+    # Remove extra whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    return text
+
+
 def convert_to_lowercase(text):
     """
     Convert text to lowercase.
@@ -319,20 +354,21 @@ def text_normalizer(text):
     Apply comprehensive text normalization pipeline.
     
     This function applies a series of text cleaning and normalization steps:
-    1. Convert to lowercase
-    2. Remove whitespace
-    3. Remove newlines and square brackets
-    4. Remove HTTP URLs
-    5. Remove punctuation
-    6. Remove HTML tags
-    7. Remove emojis
-    8. Convert acronyms
-    9. Convert contractions
-    10. Remove stopwords
-    11. Apply lemmatization
-    12. Remove non-alphabetic words
-    13. Keep only specific POS tags
-    14. Remove additional stopwords
+    1. Advanced preprocessing - normalize mentions, hashtags, numbers
+    2. Convert to lowercase
+    3. Remove whitespace
+    4. Remove newlines and square brackets
+    5. Remove HTTP URLs
+    6. Remove punctuation
+    7. Remove HTML tags
+    8. Remove emojis
+    9. Convert acronyms
+    10. Convert contractions
+    11. Remove stopwords
+    12. Apply lemmatization
+    13. Remove non-alphabetic words
+    14. Keep only specific POS tags
+    15. Remove additional stopwords
     
     Args:
         text (str): Input text
@@ -340,6 +376,7 @@ def text_normalizer(text):
     Returns:
         str: Fully normalized text
     """
+    text = advanced_text_preprocessing(text)
     text = convert_to_lowercase(text)
     text = remove_whitespace(text)
     text = re.sub('\n', '', text)  # converting text to one line
@@ -378,7 +415,10 @@ def apply_text_normalizer(data_train, data_test):
     data_test_norm['normalized_text'] = data_test['text'].apply(text_normalizer)
 
     data_train_norm['label'] = data_train['label']
-    data_test_norm['label'] = data_test['label']
+    if 'label' in data_test.columns:
+        data_test_norm['label'] = data_test['label']
+    else:
+        data_test_norm['label'] = None  # Add as null if doesn't exist
 
     data_train['normalized_text'] = data_train_norm['normalized_text']
     data_test['normalized_text'] = data_test_norm['normalized_text']
@@ -387,7 +427,10 @@ def apply_text_normalizer(data_train, data_test):
     print("Size of the test set:", len(data_test_norm))
     print()
     print("Labels in training set:", data_train_norm['label'].nunique())
-    print("Labels in test set:", data_test_norm['label'].nunique())
+    if 'label' in data_test.columns:
+        print("Labels in test set:", data_test_norm['label'].nunique())
+    else:
+        print("Labels in test set: No label column (added as null)")
     print()
     # Display Training Output (normalized)
     print("Sample of test set [normalized]:\n")

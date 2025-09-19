@@ -34,6 +34,7 @@ from .eda import (
 )
 
 from .text_processing import (
+    advanced_text_preprocessing,
     convert_to_lowercase,
     remove_whitespace,
     remove_punctuation,
@@ -66,6 +67,7 @@ __all__ = [
     'viz_word_frequency',
     'viz_word_length_frequency',
     # Text processing functions
+    'advanced_text_preprocessing',
     'convert_to_lowercase',
     'remove_whitespace',
     'remove_punctuation',

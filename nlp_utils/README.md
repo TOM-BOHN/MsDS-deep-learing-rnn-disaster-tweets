@@ -50,6 +50,7 @@ from nlp_utils.model_utils import learning_curve      # Future
 
 ### Text Processing Module (`nlp_utils.text_processing`)
 
+- `advanced_text_preprocessing()` - Advanced preprocessing with token normalization
 - `convert_to_lowercase()` - Convert text to lowercase
 - `remove_whitespace()` - Remove leading and trailing whitespaces
 - `remove_punctuation()` - Remove punctuation while preserving apostrophes
