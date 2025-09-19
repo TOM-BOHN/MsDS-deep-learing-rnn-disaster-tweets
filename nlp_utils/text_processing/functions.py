@@ -414,7 +414,12 @@ def apply_text_normalizer(data_train, data_test):
     data_train_norm['normalized_text'] = data_train['text'].apply(text_normalizer)
     data_test_norm['normalized_text'] = data_test['text'].apply(text_normalizer)
 
-    data_train_norm['label'] = data_train['label']
+    # Handle label column for both training and test data
+    if 'label' in data_train.columns:
+        data_train_norm['label'] = data_train['label']
+    else:
+        data_train_norm['label'] = None  # Add as null if doesn't exist
+        
     if 'label' in data_test.columns:
         data_test_norm['label'] = data_test['label']
     else:
@@ -426,7 +431,13 @@ def apply_text_normalizer(data_train, data_test):
     print("Size of the training set:", len(data_train_norm))
     print("Size of the test set:", len(data_test_norm))
     print()
-    print("Labels in training set:", data_train_norm['label'].nunique())
+    
+    # Handle label reporting for both datasets
+    if 'label' in data_train.columns:
+        print("Labels in training set:", data_train_norm['label'].nunique())
+    else:
+        print("Labels in training set: No label column (added as null)")
+        
     if 'label' in data_test.columns:
         print("Labels in test set:", data_test_norm['label'].nunique())
     else:
