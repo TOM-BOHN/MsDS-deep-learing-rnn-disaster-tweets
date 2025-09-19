@@ -33,9 +33,11 @@ from .functions import (
     text_stemmer,
     text_lemmatizer,
     discard_non_alpha,
+    convert_numbers_to_words,
     keep_pos,
     remove_additional_stopwords,
     text_normalizer,
+    text_normalizer_conservative,
     apply_text_normalizer
 )
 
@@ -54,8 +56,10 @@ __all__ = [
     'text_stemmer',
     'text_lemmatizer',
     'discard_non_alpha',
+    'convert_numbers_to_words',
     'keep_pos',
     'remove_additional_stopwords',
     'text_normalizer',
+    'text_normalizer_conservative',
     'apply_text_normalizer'
 ]

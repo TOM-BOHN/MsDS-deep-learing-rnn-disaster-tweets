@@ -316,6 +316,41 @@ def discard_non_alpha(text):
     return text_non_alpha
 
 
+def convert_numbers_to_words(text):
+    """
+    Convert numbers to words instead of discarding them.
+    
+    Args:
+        text (str): Input text
+        
+    Returns:
+        str: Text with numbers converted to words
+    """
+    words = regexp.tokenize(text)
+    converted_words = []
+    
+    for word in words:
+        if word.isdigit():
+            # Convert number to words
+            try:
+                word_as_number = int(word)
+                if word_as_number <= 1000000:  # Reasonable limit for conversion
+                    word_in_words = num2words(word_as_number)
+                    converted_words.append(word_in_words)
+                else:
+                    # For very large numbers, keep as is
+                    converted_words.append(word)
+            except:
+                # If conversion fails, keep original
+                converted_words.append(word)
+        elif word.isalpha():
+            # Keep alphabetic words
+            converted_words.append(word)
+        # Skip non-alphanumeric words (punctuation, etc.)
+    
+    return " ".join(converted_words)
+
+
 def keep_pos(text):
     """
     Keep only specific parts of speech from text.
@@ -394,6 +429,43 @@ def text_normalizer(text):
     text = discard_non_alpha(text)
     text = keep_pos(text)
     text = remove_additional_stopwords(text)
+    return text
+
+
+def text_normalizer_conservative(text):
+    """
+    Apply conservative text normalization pipeline that preserves more meaningful words.
+    
+    This function applies a lighter set of text cleaning and normalization steps:
+    1. Convert to lowercase
+    2. Remove HTTP URLs
+    3. Remove HTML tags
+    4. Remove emojis
+    5. Remove punctuation (except apostrophes)
+    6. Convert contractions
+    7. Remove only basic stopwords (not additional ones)
+    8. Apply lemmatization
+    9. Convert numbers to words (instead of discarding)
+    
+    Args:
+        text (str): Input text
+        
+    Returns:
+        str: Conservatively normalized text
+    """
+    text = convert_to_lowercase(text)
+    text = remove_whitespace(text)
+    text = re.sub('\n', '', text)  # converting text to one line
+    text = re.sub(r'\[.*?\]', '', text)  # removing square brackets
+    text = remove_http(text)
+    text = remove_punctuation(text)
+    text = remove_html(text)
+    text = remove_emoji(text)
+    text = convert_contractions(text)
+    # Use only basic stopwords, not the extensive additional_stops list
+    text = " ".join([word for word in regexp.tokenize(text) if word not in stops])
+    text = text_lemmatizer(text)
+    text = convert_numbers_to_words(text)  # Convert numbers to words instead of discarding
     return text
 
 
