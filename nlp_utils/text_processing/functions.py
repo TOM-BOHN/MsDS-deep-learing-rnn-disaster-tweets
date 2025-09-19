@@ -469,13 +469,15 @@ def text_normalizer_conservative(text):
     return text
 
 
-def apply_text_normalizer(data_train, data_test):
+def apply_text_normalizer(data_train, data_test, normalization_type='conservative'):
     """
     Apply text normalization to training and test datasets.
     
     Args:
         data_train (pd.DataFrame): Training data with 'text' column
         data_test (pd.DataFrame): Test data with 'text' column
+        normalization_type (str): Type of normalization to apply. 
+                                 Options: 'conservative' (default) or 'full'
         
     Returns:
         tuple: (data_train_norm, data_test_norm, data_train, data_test)
@@ -483,8 +485,16 @@ def apply_text_normalizer(data_train, data_test):
     # Implementing text normalization
     data_train_norm, data_test_norm = pd.DataFrame(), pd.DataFrame()
 
-    data_train_norm['normalized_text'] = data_train['text'].apply(text_normalizer)
-    data_test_norm['normalized_text'] = data_test['text'].apply(text_normalizer)
+    # Choose normalization function based on type
+    if normalization_type == 'conservative':
+        normalizer_func = text_normalizer_conservative
+    elif normalization_type == 'full':
+        normalizer_func = text_normalizer
+    else:
+        raise ValueError("normalization_type must be 'conservative' or 'full'")
+
+    data_train_norm['normalized_text'] = data_train['text'].apply(normalizer_func)
+    data_test_norm['normalized_text'] = data_test['text'].apply(normalizer_func)
 
     # Handle label column for both training and test data
     if 'label' in data_train.columns:
